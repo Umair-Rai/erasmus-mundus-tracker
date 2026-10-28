@@ -1,0 +1,9 @@
+backend/.venv/
+__pycache__/
+*.pyc
+
+frontend/node_modules/
+frontend/dist/
+
+# Source spreadsheets stay local. The site only publishes frontend/public/data (see README).
+*.xlsx
