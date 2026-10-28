@@ -56,6 +56,32 @@ CS-Adjacent), keyed `direct:ACRONYM` / `adjacent:ACRONYM`. Each entry has the he
 The backend merges this file into the tracker rows, and edits show up without a restart. Fees change
 every intake, so re-check a programme's official page before relying on a figure.
 
+## Accounts and wishlist (Supabase)
+
+Visitors can create an account (email + password), star programmes, set a status
+(Planning / Applying / Applied / Accepted / Rejected) and keep private notes. Accounts and data live in a
+free [Supabase](https://supabase.com) project, so this works on the static GitHub Pages site. Without the two
+settings below the site works exactly as before, just with no sign-in or stars.
+
+One-time setup:
+
+1. Create a free project at supabase.com.
+2. **SQL Editor** > New query > paste `supabase/schema.sql` > Run. This creates the `wishlist` table and the
+   row-level security policies that limit every query to the signed-in user's own rows.
+3. **Authentication > URL Configuration**: set *Site URL* to `https://umair-rai.github.io/erasmus-mundus-tracker/`
+   and add that URL plus `http://localhost:5173/` and `http://127.0.0.1:8000/` under *Redirect URLs*
+   (sign-up confirmation and password-reset links return there).
+4. **Authentication > Providers > Email**: set the minimum password length to 8. Decide on *Confirm email*:
+   on is safer, but Supabase's built-in mail sender has a very small hourly cap, so for real visitors add your
+   own SMTP under *Authentication > SMTP Settings*.
+5. **Project Settings > API**: copy the *Project URL* and the *anon public* key (the anon key is meant to be
+   public; the policies in step 2 are what protect the data).
+   - Local use: copy `frontend/.env.example` to `frontend/.env.local` and fill in both values.
+   - Live site: GitHub repo > Settings > Secrets and variables > Actions > **Variables**, add
+     `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`, then re-run the *Deploy to GitHub Pages* workflow.
+
+Never put the `service_role` key anywhere in this repo or the site.
+
 ## Live site (GitHub Pages)
 
 https://umair-rai.github.io/erasmus-mundus-tracker/

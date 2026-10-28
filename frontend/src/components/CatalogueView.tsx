@@ -1,5 +1,8 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useAuth } from "../auth";
 import type { CatalogueEntry } from "../types";
+import { STATUS_LABELS, catalogueKey, useWishlist } from "../wishlist";
+import { WishlistStar } from "./Account";
 import { CatalogueDetail } from "./CatalogueDetail";
 import { Dialog } from "./Dialog";
 import { EmptyState, RelevanceChip, SearchBox, Select, Toolbar } from "./ui";
@@ -17,6 +20,15 @@ export function CatalogueView({ items }: { items: CatalogueEntry[] }) {
   const [subject, setSubject] = useState(ALL);
   const [cycle, setCycle] = useState(ALL);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [saved, setSaved] = useState(ALL);
+  const { enabled: accountsEnabled, user } = useAuth();
+  const { entries: mine } = useWishlist();
+
+  useEffect(() => {
+    if (!user) setSaved(ALL);
+  }, [user]);
+
+  const savedCount = useMemo(() => items.filter((e) => mine[catalogueKey(e)]).length, [items, mine]);
 
   const rows = useMemo(
     () => items.map((entry) => ({ entry, haystack: [entry.acronym, entry.title, entry.subject, entry.countries].join(" ").toLowerCase() })),
@@ -40,10 +52,11 @@ export function CatalogueView({ items }: { items: CatalogueEntry[] }) {
           (!q || haystack.includes(q)) &&
           (relevance === ALL || e.relevance === relevance) &&
           (subject === ALL || e.subject === subject) &&
-          (cycle === ALL || e.cycle === cycle),
+          (cycle === ALL || e.cycle === cycle) &&
+          (saved === ALL || (saved === "saved") === Boolean(mine[catalogueKey(e)])),
       )
       .map((r) => r.entry);
-  }, [rows, query, relevance, subject, cycle]);
+  }, [rows, query, relevance, subject, cycle, saved, mine]);
 
   const selected = items.find((e) => e.id === selectedId);
 
@@ -52,6 +65,7 @@ export function CatalogueView({ items }: { items: CatalogueEntry[] }) {
     setRelevance(ALL);
     setSubject(ALL);
     setCycle(ALL);
+    setSaved(ALL);
   };
 
   return (
@@ -61,14 +75,22 @@ export function CatalogueView({ items }: { items: CatalogueEntry[] }) {
         <Select label="Relevance" value={relevance} onChange={setRelevance} options={options.relevance} />
         <Select label="Subject" value={subject} onChange={setSubject} options={options.subject} />
         <Select label="Source" value={cycle} onChange={setCycle} options={options.cycle} />
+        {user && (
+          <Select
+            label="My list"
+            value={saved}
+            onChange={setSaved}
+            options={[[ALL, "Any"], ["saved", `Saved (${savedCount})`], ["unsaved", `Not saved (${items.length - savedCount})`]]}
+          />
+        )}
       </Toolbar>
 
-      <div className="results-bar"><p className="count" role="status">{visible.length} of {items.length} programmes</p><button className="text-button" onClick={reset} disabled={!query && relevance === ALL && subject === ALL && cycle === ALL}>Reset filters</button></div>
+      <div className="results-bar"><p className="count" role="status">{visible.length} of {items.length} programmes</p><button className="text-button" onClick={reset} disabled={!query && relevance === ALL && subject === ALL && cycle === ALL && saved === ALL}>Reset filters</button></div>
 
       {visible.length === 0 ? (
         <EmptyState onReset={reset} />
       ) : (
-        <ul className="list catalogue">
+        <ul className={`list catalogue${accountsEnabled ? " has-stars" : ""}`}>
           <li className="head" aria-hidden="true">
             <span>Programme</span>
             <span className="col-countries">Countries</span>
@@ -79,10 +101,12 @@ export function CatalogueView({ items }: { items: CatalogueEntry[] }) {
           </li>
           {visible.map((e) => (
             <li key={e.id}>
+              <WishlistStar itemKey={catalogueKey(e)} name={e.acronym ?? e.title} />
               <button className="row" onClick={() => setSelectedId(e.id)}>
                 <span className="cell name">
                   <strong>{e.acronym ?? e.title}</strong>
                   {e.acronym && <span className="muted">{e.title}</span>}
+                  {mine[catalogueKey(e)] && <span className={`chip mine status-${mine[catalogueKey(e)].status}`}>{STATUS_LABELS[mine[catalogueKey(e)].status]}</span>}
                 </span>
                 <span className="cell requirement clamp col-countries" title={e.countries}>{e.countries || "—"}</span>
                 <span className="cell subject clamp">{e.subject}</span>

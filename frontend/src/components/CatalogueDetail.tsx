@@ -1,4 +1,6 @@
 import type { CatalogueEntry } from "../types";
+import { catalogueKey } from "../wishlist";
+import { MyPlan } from "./Account";
 import { Fact, LinkButtons, Linkified, RelevanceChip } from "./ui";
 
 const PLACEHOLDER = /^check programme site/i;
@@ -23,6 +25,8 @@ export function CatalogueDetail({ entry: e }: { entry: CatalogueEntry }) {
           ["EU catalogue", e.catalogue_url],
         ]}
       />
+
+      <MyPlan itemKey={catalogueKey(e)} />
 
       <dl className="facts">
         <Fact label="Subject area" value={e.subject} />

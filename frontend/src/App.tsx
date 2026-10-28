@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchDataset, fetchDatasets } from "./api";
 import { CatalogueView } from "./components/CatalogueView";
+import { AccountMenu } from "./components/Account";
 import { ThemeToggle } from "./components/ThemeToggle";
 import { TrackerView } from "./components/TrackerView";
 import { useAsync } from "./useAsync";
@@ -46,7 +47,10 @@ export default function App() {
           <nav className="tabs" aria-label="Programme collections">
             {tabs.map((t) => <a key={t.id} href={`#${t.id}`} aria-current={t.id === activeId ? "page" : undefined}>{t.label}<span className="count-pill">{t.count}</span></a>)}
           </nav>
-          <ThemeToggle />
+          <div className="nav-actions">
+            <AccountMenu />
+            <ThemeToggle />
+          </div>
         </div>
       </header>
       <main id="main-content" className="wrap container" tabIndex={-1}>

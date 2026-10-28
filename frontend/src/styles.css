@@ -71,6 +71,13 @@ svg { flex-shrink: 0; vertical-align: middle; }
 .tabs a { display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 8px; color: var(--muted); font-size: 13px; font-weight: 500; text-decoration: none; white-space: nowrap; transition: color 0.15s, background 0.15s; }
 .tabs a:hover { color: var(--text); background: var(--subtle); }
 .tabs a[aria-current='page'] { color: var(--primary); background: var(--primary-soft); }
+.nav-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.account { display: flex; align-items: center; gap: 8px; }
+.account-email { max-width: 180px; overflow: hidden; color: var(--muted); font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+.account-btn { height: 34px; padding: 0 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); font-size: 13px; font-weight: 500; white-space: nowrap; }
+.account-btn:hover { background: var(--subtle); }
+.account-btn.primary { border-color: var(--primary); background: var(--primary); color: var(--on-primary); }
+.account-btn.primary:hover { background: var(--primary); filter: brightness(0.92); }
 .theme-toggle { display: grid; place-items: center; flex-shrink: 0; width: 34px; height: 34px; padding: 0; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--muted); transition: color 0.15s, background 0.15s; }
 .theme-toggle:hover { color: var(--text); background: var(--subtle); }
 .count-pill { font-size: 12px; font-weight: 400; opacity: 0.7; font-variant-numeric: tabular-nums; }
@@ -116,6 +123,15 @@ select option { background: var(--surface); color: var(--text); }
 .tracker .head, .tracker .row { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.2fr) minmax(0, 0.8fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 0.8fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.1fr) 56px; }
 .catalogue .head, .catalogue .row { grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.4fr) minmax(0, 1.2fr) minmax(0, 1.5fr) minmax(0, 1.4fr) minmax(0, 1.1fr); }
 .list .head { padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--border); background: var(--subtle); color: var(--muted); font-size: 12px; font-weight: 500; }
+.list li { position: relative; }
+.star { position: absolute; top: 50%; left: 12px; z-index: 1; transform: translateY(-50%); display: grid; place-items: center; width: 30px; height: 30px; padding: 0; border: 0; border-radius: 8px; background: transparent; color: var(--faint); }
+.star:hover { background: var(--subtle); color: var(--text); }
+.star[aria-pressed='true'] { color: var(--primary); }
+.list.has-stars .head, .list.has-stars .row { padding-left: 52px; }
+.chip.mine { margin-top: 4px; }
+.chip.status-applying, .chip.status-applied { background: var(--primary-soft); color: var(--primary); }
+.chip.status-accepted { background: var(--green-soft); color: var(--green); }
+.chip.status-rejected { background: var(--error-soft); color: var(--red); }
 .row { width: 100%; text-align: left; border: 0; border-bottom: 1px solid var(--border); background: var(--surface); transition: background 0.15s; }
 .row:hover, .row:focus-visible { background: color-mix(in srgb, var(--lavender) 45%, var(--surface)); }
 .list li:last-child .row { border-bottom: 0; }
@@ -189,6 +205,26 @@ select option { background: var(--surface); color: var(--text); }
 .fee-block .fee-amount { margin-top: 6px; color: var(--text); font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
 .fee-amount span { display: block; margin-top: 2px; color: var(--muted); font-size: 13px; font-weight: 400; letter-spacing: 0; }
 .fee-block .fee-meta { color: var(--muted); font-size: 12px; }
+.field { display: flex; flex-direction: column; gap: 6px; margin: 14px 0; color: var(--muted); font-size: 13px; }
+.field > span { font-weight: 500; }
+.field em { margin-left: 8px; color: var(--faint); font-size: 12px; font-style: normal; font-weight: 400; }
+.field input, .field select, .field textarea { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-size: 14px; }
+.field textarea { min-height: 96px; line-height: 1.5; resize: vertical; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px var(--primary-soft); }
+.auth .button { width: 100%; margin-top: 6px; }
+.auth .button:disabled { opacity: 0.5; cursor: not-allowed; }
+.auth-tabs { display: flex; gap: 4px; margin: 14px 0 6px; padding: 4px; border-radius: 10px; background: var(--subtle); }
+.auth-tabs button { flex: 1; padding: 8px 10px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); font-size: 13px; font-weight: 500; }
+.auth-tabs button[aria-selected='true'] { background: var(--surface); color: var(--text); box-shadow: 0 1px 2px rgb(0 0 0 / 0.12); }
+.auth-links { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; margin-top: 14px; }
+.auth-error, .auth-notice { margin: 10px 0 0; padding: 10px 12px; border-radius: 8px; font-size: 13px; }
+.auth-info { margin: 10px 0 0; padding: 10px 12px; border-radius: 8px; background: var(--subtle); color: var(--muted); font-size: 13px; }
+.auth-error { background: var(--error-soft); color: var(--red); }
+.auth-notice { background: var(--green-soft); color: var(--green); }
+.auth-fine { margin: 12px 0 0; color: var(--faint); font-size: 12px; }
+.my-plan { margin: 20px 0; padding: 16px 18px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); font-size: 13px; }
+.my-plan > p { margin: 8px 0 12px; color: var(--muted); }
+.my-plan .field:last-child { margin-bottom: 0; }
 .alert { margin: 16px 0; padding: 12px 14px; border: 1px solid color-mix(in srgb, var(--amber) 25%, transparent); border-radius: 8px; background: var(--amber-soft); color: var(--amber); font-size: 13px; }
 .alert p { margin: 4px 0 0; overflow-wrap: anywhere; }
 
@@ -214,7 +250,9 @@ select option { background: var(--surface); color: var(--text); }
   .wrap { padding: 0 16px; }
   .nav-inner { flex-direction: column; align-items: stretch; gap: 2px; min-height: 0; padding-top: 14px; padding-bottom: 8px; }
   .tabs { margin: 0 -12px; }
-  .theme-toggle { position: absolute; top: 8px; right: 16px; }
+  .nav-actions { position: absolute; top: 8px; right: 16px; }
+  .account-email, .account-secondary { display: none; }
+  .star { top: 16px; transform: none; }
   .container { padding-top: 28px; }
   h1 { font-size: 24px; }
   .search-wrap { flex-basis: 100%; }

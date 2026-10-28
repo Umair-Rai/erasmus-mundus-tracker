@@ -1,7 +1,10 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useAuth } from "../auth";
 import { deadlineSortKey, formatDay, startOfToday, timingOf, type Timing, type TimingKind } from "../dates";
 import { countriesOf, feeBand, ieltsBand, moiVerdict, pakistanVerdict, type FeeBand, type Verdict } from "../facets";
 import type { Note, Programme } from "../types";
+import { STATUSES, STATUS_LABELS, trackerKey, useWishlist } from "../wishlist";
+import { WishlistStar } from "./Account";
 import { Dialog } from "./Dialog";
 import { TrackerDetail } from "./TrackerDetail";
 import { EmptyState, FilterToggle, Notes, PriorityChip, SearchBox, Select, Toolbar } from "./ui";
@@ -62,6 +65,8 @@ interface Filters extends Record<FilterKey, string> {
   timing: TimingFilter;
   windowOnly: boolean;
   sort: SortKey;
+  mine: string;
+  mineStatus: string;
 }
 
 const DEFAULTS: Filters = {
@@ -69,6 +74,8 @@ const DEFAULTS: Filters = {
   timing: ALL,
   windowOnly: false,
   sort: "sheet",
+  mine: ALL,
+  mineStatus: ALL,
   priority: ALL,
   pakistan: ALL,
   moi: ALL,
@@ -97,8 +104,14 @@ export function TrackerView({ items, notes }: { items: Programme[]; notes: Note[
   const [filters, setFilters] = useState(DEFAULTS);
   const [panelOpen, setPanelOpen] = useState(() => window.matchMedia("(min-width: 721px)").matches);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const { enabled: accountsEnabled, user } = useAuth();
+  const { entries: mine } = useWishlist();
 
-  const set = <K extends keyof Filters>(key: K, value: Filters[K]) => setFilters((f) => ({ ...f, [key]: value }));
+  useEffect(() => {
+    if (!user) setFilters((f) => (f.mine === ALL && f.mineStatus === ALL ? f : { ...f, mine: ALL, mineStatus: ALL }));
+  }, [user]);
+
+  const set =<K extends keyof Filters>(key: K, value: Filters[K]) => setFilters((f) => ({ ...f, [key]: value }));
 
   const rows = useMemo<Row[]>(
     () =>
@@ -150,15 +163,28 @@ export function TrackerView({ items, notes }: { items: Programme[]; notes: Note[
     ];
   }, [rows]);
 
+  const mineFields = useMemo<[string, string, [string, string][]][]>(() => {
+    const saved = rows.filter((r) => mine[trackerKey(r.programme)]).length;
+    const inStatus = (s: string) => rows.filter((r) => mine[trackerKey(r.programme)]?.status === s).length;
+    return [
+      ["mine", "My list", [[ALL, "Any"], ["saved", `Saved (${saved})`], ["unsaved", `Not saved (${rows.length - saved})`]]],
+      ["mineStatus", "My status", [[ALL, "Any"], ...STATUSES.map((s): [string, string] => [s, `${STATUS_LABELS[s]} (${inStatus(s)})`])]],
+    ];
+  }, [rows, mine]);
+
   const visible = useMemo(() => {
     const q = filters.query.trim().toLowerCase();
-    const result = rows.filter(
-      (r) =>
+    const result = rows.filter((r) => {
+      const entry = mine[trackerKey(r.programme)];
+      return (
         (!q || r.haystack.includes(q)) &&
         (filters.timing === ALL || r.timing.kind === filters.timing) &&
         (!filters.windowOnly || r.programme.in_window) &&
-        FILTER_KEYS.every((k) => filters[k] === ALL || MATCHERS[k](filters[k], r)),
-    );
+        FILTER_KEYS.every((k) => filters[k] === ALL || MATCHERS[k](filters[k], r)) &&
+        (filters.mine === ALL || (filters.mine === "saved") === Boolean(entry)) &&
+        (filters.mineStatus === ALL || entry?.status === filters.mineStatus)
+      );
+    });
     if (filters.sort === "deadline") {
       result.sort((a, b) =>
         deadlineSortKey(a.programme, a.timing).localeCompare(deadlineSortKey(b.programme, b.timing)),
@@ -169,11 +195,15 @@ export function TrackerView({ items, notes }: { items: Programme[]; notes: Note[
       result.sort((a, b) => (a.programme.opens_on ?? "9999-12-31").localeCompare(b.programme.opens_on ?? "9999-12-31"));
     }
     return result;
-  }, [rows, filters]);
+  }, [rows, filters, mine]);
 
   const hasWindow = items.some((p) => p.in_window);
   const selected = rows.find((r) => r.programme.id === selectedId);
-  const activeFilters = FILTER_KEYS.filter((k) => filters[k] !== ALL).length + (filters.windowOnly ? 1 : 0);
+  const activeFilters =
+    FILTER_KEYS.filter((k) => filters[k] !== ALL).length +
+    (filters.windowOnly ? 1 : 0) +
+    (filters.mine !== ALL ? 1 : 0) +
+    (filters.mineStatus !== ALL ? 1 : 0);
   const dirty = (Object.keys(DEFAULTS) as (keyof Filters)[]).some((k) => filters[k] !== DEFAULTS[k]);
   const reset = () => setFilters(DEFAULTS);
 
@@ -196,6 +226,9 @@ export function TrackerView({ items, notes }: { items: Programme[]; notes: Note[
       {panelOpen && (
         <div className="filters-panel" id="filters-panel">
           <div className="filters-grid">
+            {user && mineFields.map(([key, label, options]) => (
+              <Select key={key} label={label} value={filters[key as "mine" | "mineStatus"]} onChange={(v) => set(key as "mine" | "mineStatus", v)} options={options} />
+            ))}
             {fields.map((f) => (
               <Select key={f.key} label={f.label} value={filters[f.key]} onChange={(v) => set(f.key, v)} options={f.options} />
             ))}
@@ -214,7 +247,7 @@ export function TrackerView({ items, notes }: { items: Programme[]; notes: Note[
       {visible.length === 0 ? (
         <EmptyState onReset={reset} />
       ) : (
-        <ul className="list tracker">
+        <ul className={`list tracker${accountsEnabled ? " has-stars" : ""}`}>
           <li className="head" aria-hidden="true">
             <span>Programme</span>
             <span>Countries</span>
@@ -227,12 +260,15 @@ export function TrackerView({ items, notes }: { items: Programme[]; notes: Note[
           {visible.map((row) => {
             const p = row.programme;
             const { main, sub } = deadlineCell(row);
+            const entry = mine[trackerKey(p)];
             return (
               <li key={p.id}>
+                <WishlistStar itemKey={trackerKey(p)} name={p.acronym ?? p.title} />
                 <button className="row" onClick={() => setSelectedId(p.id)}>
                   <span className="cell name">
                     <strong>{p.acronym ?? p.title}</strong>
                     {p.acronym && <span className="muted">{p.title}</span>}
+                    {entry && <span className={`chip mine status-${entry.status}`}>{STATUS_LABELS[entry.status]}</span>}
                   </span>
                   <span className="cell countries clamp" title={p.countries}><span className="mobile-label">Countries</span>{p.countries || "To be confirmed"}</span>
                   <span className="cell start-date" title={p.opens || "Start date to be announced"}>

@@ -1,6 +1,8 @@
 import type { Timing } from "../dates";
 import { formatDay } from "../dates";
 import type { Programme } from "../types";
+import { trackerKey } from "../wishlist";
+import { MyPlan } from "./Account";
 import { Fact, LinkButtons, Linkified, PriorityChip, TimingChip } from "./ui";
 
 const FEE_STATUS_LABEL = {
@@ -65,6 +67,8 @@ export function TrackerDetail({ programme: p, timing }: { programme: Programme; 
           ["Official source", p.source_url],
         ]}
       />
+
+      <MyPlan itemKey={trackerKey(p)} />
 
       <FeeBlock programme={p} />
 
