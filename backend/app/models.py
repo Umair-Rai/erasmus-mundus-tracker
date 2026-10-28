@@ -32,6 +32,12 @@ class Programme(BaseModel):
     source_url: str = ""
     in_window: bool = False
     alerts: list[Note] = []
+    fee: str = ""
+    fee_note: str = ""
+    fee_detail: str = ""
+    fee_source: str = ""
+    fee_status: Literal["published", "unverified", "not_found", ""] = ""
+    fee_checked: str = ""
 
 
 class CatalogueEntry(BaseModel):

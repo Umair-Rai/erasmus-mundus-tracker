@@ -40,8 +40,8 @@ const REQUIREMENT_COLUMNS: { key: "ielts" | "moi" | "gre" | "stipend" | "pakista
   { key: "ielts", label: "IELTS", className: "col-ielts" },
   { key: "moi", label: "MOI accepted", className: "col-moi" },
   { key: "gre", label: "GRE", className: "col-gre" },
-  { key: "stipend", label: "Stipend", className: "col-stipend" },
   { key: "pakistan_eligible", label: "Pakistan eligible", className: "col-pakistan" },
+  { key: "stipend", label: "Stipend", className: "col-stipend" },
 ];
 
 function deadlineCell({ programme: p, timing }: Row) {
@@ -71,6 +71,8 @@ export function TrackerView({ items, notes }: { items: Programme[]; notes: Note[
           programme.countries,
           programme.call_status,
           programme.stipend,
+          programme.fee,
+          programme.fee_note,
           programme.ielts,
           programme.moi,
           programme.gre,
@@ -155,6 +157,7 @@ export function TrackerView({ items, notes }: { items: Programme[]; notes: Note[
             <span>Opens</span>
             <span>Deadline</span>
             {REQUIREMENT_COLUMNS.map((c) => <span key={c.key} className={c.className}>{c.label}</span>)}
+            <span>Tuition fee</span>
             <span>Priority</span>
           </li>
           {visible.map((row) => {
@@ -183,6 +186,12 @@ export function TrackerView({ items, notes }: { items: Programme[]; notes: Note[
                       {p[c.key] || "—"}
                     </span>
                   ))}
+                  <span className={`cell fee fee-${p.fee_status || "none"}`} title={p.fee_detail}>
+                    <span className="mobile-label">Tuition fee</span>
+                    <strong>{p.fee || "—"}</strong>
+                    {p.fee_note && <span className="sub">{p.fee_note}</span>}
+                    {p.fee_status === "unverified" && <span className="flag">unverified</span>}
+                  </span>
                   <span className="cell prio">
                     <PriorityChip value={p.priority} />
                   </span>

@@ -103,7 +103,7 @@ h1 { margin: 0; font-size: 28px; font-weight: 600; line-height: 1.2; letter-spac
 
 .list { margin: 0; padding: 0; list-style: none; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); overflow: hidden; }
 .list .head, .list .row { display: grid; align-items: center; gap: 12px; padding: 14px 18px; }
-.tracker .head, .tracker .row { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.3fr) minmax(0, 0.8fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 0.8fr) minmax(0, 1.1fr) minmax(0, 1fr) 56px; }
+.tracker .head, .tracker .row { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.2fr) minmax(0, 0.8fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 0.8fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.1fr) 56px; }
 .catalogue .head, .catalogue .row { grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.4fr) minmax(0, 1.2fr) minmax(0, 1.5fr) minmax(0, 1.4fr) minmax(0, 1.1fr); }
 .list .head { padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--border); background: var(--subtle); color: var(--muted); font-size: 12px; font-weight: 500; }
 .row { width: 100%; text-align: left; border: 0; border-bottom: 1px solid var(--border); background: var(--surface); transition: background 0.15s; }
@@ -118,6 +118,10 @@ h1 { margin: 0; font-size: 28px; font-weight: 600; line-height: 1.2; letter-spac
 .sub { display: block; margin-top: 2px; color: var(--muted); font-size: 12px; }
 .sub.open { color: var(--green); }
 .sub.upcoming { color: var(--amber); }
+.cell.fee strong { display: block; font-weight: 600; }
+.cell.fee .sub { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.cell.fee-not_found strong, .cell.fee-none strong { color: var(--faint); font-weight: 400; }
+.flag { display: inline-block; margin-top: 3px; padding: 0 7px; border-radius: 999px; background: var(--amber-soft); color: var(--amber); font-size: 11px; font-weight: 500; line-height: 1.6; }
 .mobile-label { display: none; }
 
 .chip { display: inline-flex; align-items: center; padding: 2px 9px; border-radius: 999px; background: var(--subtle); color: var(--muted); font-size: 12px; font-weight: 500; line-height: 1.6; white-space: nowrap; }
@@ -165,6 +169,16 @@ h1 { margin: 0; font-size: 28px; font-weight: 600; line-height: 1.2; letter-spac
 .detail h3 { margin: 24px 0 8px; font-size: 14px; font-weight: 600; }
 .detail ul { padding-left: 18px; font-size: 13px; }
 .detail li { margin-bottom: 8px; overflow-wrap: anywhere; }
+.fee-block { margin: 20px 0; padding: 16px 18px; border: 1px solid var(--border); border-radius: 12px; background: var(--subtle); font-size: 13px; }
+.fee-block p { margin: 8px 0 0; overflow-wrap: anywhere; }
+.fee-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.fee-head h3, .detail .fee-head h3 { margin: 0; }
+.fee-head .flag { margin-top: 0; }
+.fee-block.fee-published .flag { background: var(--green-soft); color: var(--green); }
+.fee-block.fee-not_found .flag { background: var(--surface); color: var(--muted); }
+.fee-block .fee-amount { margin-top: 6px; color: var(--text); font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
+.fee-amount span { display: block; margin-top: 2px; color: var(--muted); font-size: 13px; font-weight: 400; letter-spacing: 0; }
+.fee-block .fee-meta { color: var(--muted); font-size: 12px; }
 .alert { margin: 16px 0; padding: 12px 14px; border: 1px solid color-mix(in srgb, var(--amber) 25%, transparent); border-radius: 8px; background: var(--amber-soft); color: var(--amber); font-size: 13px; }
 .alert p { margin: 4px 0 0; overflow-wrap: anywhere; }
 
@@ -174,16 +188,16 @@ h1 { margin: 0; font-size: 28px; font-weight: 600; line-height: 1.2; letter-spac
 
 @media (max-width: 1280px) {
   .col-pakistan { display: none; }
-  .tracker .head, .tracker .row { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.3fr) minmax(0, 0.8fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 0.8fr) minmax(0, 1.1fr) 56px; }
+  .tracker .head, .tracker .row { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.3fr) minmax(0, 0.8fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 0.8fr) minmax(0, 1.1fr) minmax(0, 1.2fr) 56px; }
 }
 @media (max-width: 1100px) {
   .col-stipend, .col-deadline { display: none; }
-  .tracker .head, .tracker .row { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.3fr) minmax(0, 0.9fr) minmax(0, 1.1fr) minmax(0, 1.1fr) minmax(0, 1.4fr) minmax(0, 0.9fr) 56px; }
+  .tracker .head, .tracker .row { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.3fr) minmax(0, 0.9fr) minmax(0, 1.1fr) minmax(0, 1.1fr) minmax(0, 1.4fr) minmax(0, 0.9fr) minmax(0, 1.2fr) 56px; }
   .catalogue .head, .catalogue .row { grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.4fr) minmax(0, 1.2fr) minmax(0, 1.5fr) minmax(0, 1.1fr); }
 }
 @media (max-width: 900px) {
   .col-moi, .col-gre, .col-countries { display: none; }
-  .tracker .head, .tracker .row { grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.4fr) minmax(0, 0.9fr) minmax(0, 1.1fr) minmax(0, 1.2fr) 56px; }
+  .tracker .head, .tracker .row { grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.3fr) minmax(0, 0.9fr) minmax(0, 1.1fr) minmax(0, 1.1fr) minmax(0, 1.2fr) 56px; }
   .catalogue .head, .catalogue .row { grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.4fr) minmax(0, 1.7fr) minmax(0, 1.2fr); }
 }
 @media (max-width: 720px) {
@@ -197,8 +211,9 @@ h1 { margin: 0; font-size: 28px; font-weight: 600; line-height: 1.2; letter-spac
   .toggle { flex-basis: 100%; padding: 4px 0; }
   .list .head { display: none; }
   .list .row { gap: 10px 12px; padding: 16px; }
-  .tracker .row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; grid-template-areas: 'name name prio' 'countries countries countries' 'start deadline deadline' 'ielts gre gre'; }
+  .tracker .row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; grid-template-areas: 'name name prio' 'countries countries countries' 'start deadline deadline' 'ielts gre gre' 'fee fee fee'; }
   .cell.countries, .cell.col-ielts, .cell.col-gre, .cell.subject, .cell.cycle { display: block; }
+  .cell.fee { grid-area: fee; }
   .cell.col-ielts { grid-area: ielts; }
   .cell.col-gre { grid-area: gre; }
   .catalogue .row { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: 'name name' 'subject subject' 'relevance cycle'; }

@@ -38,6 +38,21 @@ Open http://127.0.0.1:8000. Set `DATA_DIR` to read the spreadsheets from another
 Sheet names and column headers are mapped in `backend/app/loader.py`; unmapped headers are
 logged as warnings.
 
+## Fee data
+
+`backend/data/fees.json` holds researched tuition fees for the tracked programmes (Direct CS / AI and
+CS-Adjacent), keyed `direct:ACRONYM` / `adjacent:ACRONYM`. Each entry has the headline `fee`, a short
+`fee_note`, a longer `fee_detail`, the `fee_source` page, the `fee_checked` date and a `fee_status`:
+
+| `fee_status` | Meaning |
+| --- | --- |
+| `published` | Read on the programme's (or a partner university's) own page |
+| `unverified` | Only from a search summary or third-party listing; confirm on the programme site |
+| `not_found` | No fee published, or the site couldn't be read |
+
+The backend merges this file into the tracker rows, and edits show up without a restart. Fees change
+every intake, so re-check a programme's official page before relying on a figure.
+
 ## Live site (GitHub Pages)
 
 https://umair-rai.github.io/erasmus-mundus-tracker/

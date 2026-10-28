@@ -3,6 +3,35 @@ import { formatDay } from "../dates";
 import type { Programme } from "../types";
 import { Fact, LinkButtons, Linkified, PriorityChip, TimingChip } from "./ui";
 
+const FEE_STATUS_LABEL = {
+  published: "From the programme's pages",
+  unverified: "Unverified: confirm on the programme site",
+  not_found: "No fee published",
+} as const;
+
+function FeeBlock({ programme: p }: { programme: Programme }) {
+  if (!p.fee) return null;
+  return (
+    <section className={`fee-block fee-${p.fee_status || "none"}`}>
+      <div className="fee-head">
+        <h3>Tuition fee</h3>
+        {p.fee_status && <span className="flag">{FEE_STATUS_LABEL[p.fee_status]}</span>}
+      </div>
+      <p className="fee-amount">
+        {p.fee}
+        {p.fee_note && <span>{p.fee_note}</span>}
+      </p>
+      <p>{p.fee_detail}</p>
+      {p.fee_source && (
+        <p className="fee-meta">
+          <a href={p.fee_source} target="_blank" rel="noreferrer">Source ↗</a>
+          {p.fee_checked && <> · checked {formatDay(p.fee_checked)}</>}
+        </p>
+      )}
+    </section>
+  );
+}
+
 function dateText(raw: string, iso: string | null) {
   return iso ? raw.replace(iso, formatDay(iso)) : raw;
 }
@@ -36,6 +65,8 @@ export function TrackerDetail({ programme: p, timing }: { programme: Programme; 
           ["Official source", p.source_url],
         ]}
       />
+
+      <FeeBlock programme={p} />
 
       <dl className="facts">
         <Fact label="Countries / mobility" value={p.countries} />

@@ -1,3 +1,4 @@
+import json
 import logging
 import os
 import re
@@ -13,6 +14,7 @@ from .models import CatalogueDataset, CatalogueEntry, Note, Programme, TrackerDa
 log = logging.getLogger(__name__)
 
 DATA_DIR = Path(os.environ.get("DATA_DIR") or Path(__file__).resolve().parents[2])
+FEES_FILE = Path(__file__).resolve().parents[1] / "data" / "fees.json"
 
 
 class DataError(Exception):
@@ -162,7 +164,15 @@ def _notes(wb, sheet: str) -> list[Note]:
     ]
 
 
-def _programme(source_id: str, index: int, row: dict[str, Any], window: set[str]) -> Programme:
+def _load_fees() -> dict[str, dict[str, str]]:
+    try:
+        return json.loads(FEES_FILE.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        log.warning("No fee data at %s", FEES_FILE)
+        return {}
+
+
+def _programme(source_id: str, index: int, row: dict[str, Any], window: set[str], fees: dict[str, dict[str, str]]) -> Programme:
     name = _text(row.get("name"))
     acronym, title = _split_name(name)
     return Programme(
@@ -174,6 +184,7 @@ def _programme(source_id: str, index: int, row: dict[str, Any], window: set[str]
         deadline_on=_day(row.get("deadline")),
         suggestions=_split(row.get("suggestions"), "•"),
         in_window=name in window,
+        **fees.get(f"{source_id}:{acronym or title}", {}),
         **{field: _text(row.get(field)) for field in TRACKER_TEXT},
     )
 
@@ -195,7 +206,12 @@ def _build_tracker(source: Source, wb) -> TrackerDataset:
     window = set()
     if source.window_sheet:
         window = {_text(r.get("name")) for r in _mapped_rows(wb, source.window_sheet, TRACKER_COLUMNS)}
-    programmes = [_programme(source.id, i, row, window) for i, row in enumerate(rows)]
+    fees = _load_fees()
+    programmes = [_programme(source.id, i, row, window, fees) for i, row in enumerate(rows)]
+    matched = {f"{source.id}:{p.acronym or p.title}" for p in programmes}
+    stale = [k for k in fees if k.startswith(f"{source.id}:") and k not in matched]
+    if stale:
+        log.warning("fees.json has entries matching no %s programme: %s", source.id, ", ".join(stale))
     notes = _notes(wb, source.readme_sheet) if source.readme_sheet else []
     return TrackerDataset(id=source.id, label=source.label, notes=_attach_alerts(programmes, notes), items=programmes)
 
@@ -222,7 +238,7 @@ def _build(source: Source) -> TrackerDataset | CatalogueDataset:
         wb.close()
 
 
-_cache: dict[str, tuple[int, TrackerDataset | CatalogueDataset]] = {}
+_cache: dict[str, tuple[tuple[int, int], TrackerDataset | CatalogueDataset]] = {}
 
 
 def find_source(dataset_id: str) -> Source | None:
@@ -232,7 +248,7 @@ def find_source(dataset_id: str) -> Source | None:
 def get_dataset(source: Source) -> TrackerDataset | CatalogueDataset:
     path = DATA_DIR / source.file
     try:
-        stamp = path.stat().st_mtime_ns
+        stamp = (path.stat().st_mtime_ns, FEES_FILE.stat().st_mtime_ns if FEES_FILE.exists() else 0)
     except FileNotFoundError:
         raise DataError(f"File not found: {path}") from None
     cached = _cache.get(source.id)

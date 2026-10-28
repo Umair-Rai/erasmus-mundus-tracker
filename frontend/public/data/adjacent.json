@@ -83,7 +83,13 @@
       "call_status": "Confirmed window — funded",
       "source_url": "https://www.imlex.org/how-to-apply/application-faq/",
       "in_window": true,
-      "alerts": []
+      "alerts": [],
+      "fee": "€9,000 / yr",
+      "fee_note": "non-EU/EEA · EU/EEA free",
+      "fee_detail": "Consortium fee from the 2025 intake onwards: €9,000 per academic year for non-EU/EEA students; there are no consortium fees for citizens of EU/EEA countries or Switzerland. The consortium may grant partial or full fee waivers to the best applicants. The Erasmus Mundus scholarship covers participation costs (tuition, library, laboratory), full insurance and other mandatory costs, plus €1,400/month for up to 24 months.",
+      "fee_source": "https://www.imlex.org/fees-and-scholarships/",
+      "fee_status": "published",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-1",
@@ -111,7 +117,13 @@
       "call_status": "2027 intake dates not announced",
       "source_url": "https://www.emjm-imaging.eu/application-and-admission/",
       "in_window": false,
-      "alerts": []
+      "alerts": [],
+      "fee": "Not found",
+      "fee_note": "contact the programme",
+      "fee_detail": "The application pages give no tuition figure (the site says to email contact@emjm-imaging.eu for fee amounts). There is no consortium application fee, though POLIMI may charge one if you also apply to its other master's courses.",
+      "fee_source": "https://www.emjm-imaging.eu/application-and-admission/questions-and-answers/",
+      "fee_status": "not_found",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-2",
@@ -143,7 +155,13 @@
           "label": "IFROS partial funding",
           "text": "Latest programme FAQ says 2026 consortium grant reduces tuition but includes NO monthly stipend. Do not confuse it with full Erasmus Mundus support."
         }
-      ]
+      ],
+      "fee": "€7,500 / yr",
+      "fee_note": "non-EU · €15,000 total",
+      "fee_detail": "Standard tuition for the 2-year course: non-EU/Partner Country students €15,000 total (€7,500 per year); EU/Programme Country students €9,000 total (€4,500 per year). For the 2026–2028 intake, 14 Consortium Excellence Grants cover €14,500 of the tuition for non-EU students (€8,500 for EU students); grant recipients still pay €500 (non-refundable except for visa denial or force majeure). The grants don't include a living allowance or travel costs.",
+      "fee_source": "https://ifrosmaster.org/ifros-applicants/fees-grants",
+      "fee_status": "published",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-3",
@@ -171,7 +189,13 @@
       "call_status": "Confirmed window — funded",
       "source_url": "https://www.erasmus-mundus.emimep.eu/admission-applications/https-www-erasmus-mundus-emimep-eu-admission-applications-erasmus-mundus-application/",
       "in_window": true,
-      "alerts": []
+      "alerts": [],
+      "fee": "≈€750 / month",
+      "fee_note": "same for EU and non-EU",
+      "fee_detail": "The fees page says participation costs 'may come to 750 Euros/month during the period of study' (about €18,000 over 24 months if charged for every month), with one rate for EU and non-EU students and no per-year total given. The Erasmus Mundus scholarship covers this cost, and the consortium has granted fee waivers to some self-funded students. Accommodation, food and travel are not included.",
+      "fee_source": "https://www.erasmus-mundus.emimep.eu/admission-applications/tuition-fees/",
+      "fee_status": "published",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-4",
@@ -199,7 +223,13 @@
       "call_status": "Confirmed window — funded",
       "source_url": "https://eminent-master.eu/scholarships/",
       "in_window": true,
-      "alerts": []
+      "alerts": [],
+      "fee": "No tuition (listings)",
+      "fee_note": "",
+      "fee_detail": "The official site could not be opened (DNS errors). Third-party listings for the University of Siegen show €0 tuition and a semester contribution of about €280 for both EU and non-EU students, and describe the Erasmus Mundus scholarship as covering tuition, insurance, travel and about €1,400/month. These are aggregator sources, so confirm on the programme site; the 2026 call closed on 1 March 2026.",
+      "fee_source": "https://www.mastersportal.com/studies/485722/european-master-on-embedded-intelligence-nanosystems-engineering.html",
+      "fee_status": "unverified",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-5",
@@ -227,7 +257,13 @@
       "call_status": "Expected window — exact dates not yet published",
       "source_url": "https://master-digicrea.univ-st-etienne.fr/en/useful-info/faq-1.html",
       "in_window": true,
-      "alerts": []
+      "alerts": [],
+      "fee": "None charged",
+      "fee_note": "self-financed students",
+      "fee_detail": "The page says that for applicants accepted without a scholarship ('self-financed students'), participation costs are not charged; only a few such places are accepted per intake. A €1,400/month scholarship is possible depending on the applicant's level. The next cohort is 2027–2029, with the call expected to open in mid-November 2026.",
+      "fee_source": "https://master-digicrea.univ-st-etienne.fr/en/useful-info/faq-1.html",
+      "fee_status": "published",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-6",
@@ -255,7 +291,13 @@
       "call_status": "Already open before window — funded",
       "source_url": "https://master-photonics4security.eu/key-dates/",
       "in_window": false,
-      "alerts": []
+      "alerts": [],
+      "fee": "Unclear",
+      "fee_note": "official page conflicts",
+      "fee_detail": "The official page shows '€18,000' as 'Tuition Fees' without saying whether it is per year or for the whole programme, or which student category it applies to. The same page lists self-funded students under 'no tuition fees' and says all selected applicants get 100% fee waivers, so the two statements conflict. Scholarships listed: EMJM €1,400/month; Manutech €5,500/year; iPSRS consortium €750/month. Ask the programme team which figure applies to self-funded students.",
+      "fee_source": "https://master-photonics4security.eu/tuition-fees-and-scholarships-2025-2027/",
+      "fee_status": "unverified",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-7",
@@ -283,7 +325,13 @@
       "call_status": "Already open before window — funded call",
       "source_url": "https://www.gem-msc.eu/apply-to-gem/",
       "in_window": false,
-      "alerts": []
+      "alerts": [],
+      "fee": "€19,800 total",
+      "fee_note": "non-EU · EU €5,500 · 24 months",
+      "fee_detail": "Self-funded tuition for the whole 24-month course: €19,800 for non-EU countries and €5,500 for EU countries (includes student insurance and fieldwork). It can be paid in two equal annual instalments. The page's estimated total cost including living costs is €50,200 (non-EU). The Erasmus+ scholarship gives a full tuition waiver, insurance and €1,400/month for up to 24 months; about 17–18 scholarships are available for the 2027–2029 intake.",
+      "fee_source": "https://www.gem-msc.eu/apply-to-gem/finances/",
+      "fee_status": "published",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-8",
@@ -315,7 +363,13 @@
           "label": "WAVES name collision",
           "text": "Your spreadsheet calls WAVES Water Vulnerability Engineering in Spatial Sciences: its current site is https://msc-waves.eu/ ; NOT https://master-waves.eu/ (older acoustics programme)."
         }
-      ]
+      ],
+      "fee": "€12,000 / yr",
+      "fee_note": "non-EU · EU/EEA €3,000",
+      "fee_detail": "Self-funded students pay €3,000 per year (EU/EEA nationals) or €12,000 per year (non-EU nationals); the page's planning totals including living costs are about €30,000 (EU/EEA) and €48,000 (non-EU) for two years, plus €1,500–2,500 of one-off costs. The Erasmus Mundus scholarship covers participation costs in full plus a monthly living contribution, travel and installation. No application fee. The intake year isn't stated.",
+      "fee_source": "https://msc-waves.eu/fees-and-funding",
+      "fee_status": "published",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-9",
@@ -342,7 +396,13 @@
       "call_status": "Confirmed window — funded",
       "source_url": "https://www.europhotonics.org/wordpress/how/",
       "in_window": true,
-      "alerts": []
+      "alerts": [],
+      "fee": "Varies by path",
+      "fee_note": "€0 to ≈€5,550 / yr by university",
+      "fee_detail": "Fees depend on the universities in your mobility path (approximate 2024–25 figures): Marseille no tuition (about €353 registration per year); Karlsruhe non-EU €1,500 per semester; Barcelona non-EU €2,500 per semester (EU €830); Tampere about €150 registration with a tuition waiver for semesters 3–4; Vilnius about €5,550 per year (to be confirmed). There is no single self-funded total.",
+      "fee_source": "https://www.europhotonics.org/wordpress/tuition-fees/",
+      "fee_status": "published",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-10",
@@ -370,7 +430,13 @@
       "call_status": "2027 application cycle unverified",
       "source_url": "https://www.master-mir.eu/scholarships/",
       "in_window": false,
-      "alerts": []
+      "alerts": [],
+      "fee": "Not found",
+      "fee_note": "official site unreachable",
+      "fee_detail": "The programme site could not be opened. A listing shows tuition of €9,000 and €4,500 per year without saying which group pays which, and an older Técnico notice said only a few places (7 of about 29 in 2022/23) are open to self-financing students. Check the current call for the fee.",
+      "fee_source": "https://www.master-mir.eu/scholarships/",
+      "fee_status": "not_found",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-11",
@@ -398,7 +464,13 @@
       "call_status": "Selected 2026; 2027 dates/portal not published",
       "source_url": "https://erasmus-plus.ec.europa.eu/whats-new/news/87-projects-selected-under-erasmus-mundus-in-latest-call-for-proposals",
       "in_window": false,
-      "alerts": []
+      "alerts": [],
+      "fee": "Not found",
+      "fee_note": "no programme site yet",
+      "fee_detail": "SMARTLight appears only in the EU's list of newly selected Erasmus Mundus projects; No programme website or published fee was found. Check back when it publishes its first call.",
+      "fee_source": "https://erasmus-plus.ec.europa.eu/whats-new/news/87-projects-selected-under-erasmus-mundus-in-latest-call-for-proposals",
+      "fee_status": "not_found",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-12",
@@ -425,7 +497,13 @@
       "call_status": "Already open before window; 2027 dates labelled indicative",
       "source_url": "https://www.cyber-t.eu/key-dates/",
       "in_window": false,
-      "alerts": []
+      "alerts": [],
+      "fee": "Not found",
+      "fee_note": "official site unreachable",
+      "fee_detail": "The programme site could not be opened (DNS errors) and no official tuition figure was found. An aggregator mentions merit-based tuition scholarships of €9,000 for self-funded students, which is a scholarship amount and not a published rate. The Erasmus Mundus award is described as €1,400/month plus a fee waiver. Check Universidade Lusófona's CYBER page.",
+      "fee_source": "https://www.ulusofona.pt/en/lisboa/erasmus-mundus/cyberspace-behaviour-and-e-therapy",
+      "fee_status": "not_found",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-13",
@@ -452,7 +530,13 @@
       "call_status": "Confirmed window — funded; end date TBD",
       "source_url": "https://www.emtccm.org/scholarships/",
       "in_window": true,
-      "alerts": []
+      "alerts": [],
+      "fee": "Not found",
+      "fee_note": "contact the programme",
+      "fee_detail": "No tuition or registration fee for self-funded students is published on the pages that could be read. The scholarship (15 grants per year) covers registration fees, health insurance and €1,400/month. The next call opens on 30 October 2026. Contact emtccm@uam.es for fees.",
+      "fee_source": "https://www.emtccm.org/scholarships/",
+      "fee_status": "not_found",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-14",
@@ -479,7 +563,13 @@
       "call_status": "Already open before window; funded",
       "source_url": "https://master-radmep.org/deadlines/",
       "in_window": false,
-      "alerts": []
+      "alerts": [],
+      "fee": "€9,000 / yr",
+      "fee_note": "other countries · EU €4,500 · €18,000 total",
+      "fee_detail": "Participation costs for self-funded students are the same in 2026–27 and 2027–28: €4,500 per year for EU Member States and €9,000 per year for other countries (totals €9,000 and €18,000), payable in three instalments. Accommodation and travel are not included. A RADMEP+ fee waiver (reduced tuition) is available to up to 50 self-funded students: €1,000 per year for EU and €2,000 per year for non-EU students. The EMJM scholarship is up to €1,400/month for 2 years.",
+      "fee_source": "https://master-radmep.org/scholarships/",
+      "fee_status": "published",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-15",
@@ -507,7 +597,13 @@
       "call_status": "Already open before window — funded",
       "source_url": "https://www.greenanomaster.eu/application-and-selection",
       "in_window": false,
-      "alerts": []
+      "alerts": [],
+      "fee": "Not found",
+      "fee_note": "Pakistan: partial grants only",
+      "fee_detail": "No self-funded tuition amount is on the page. Important: it states the maximum number of full Erasmus Mundus scholarships for Pakistan and Bangladesh has been reached, and applicants from these countries are invited to apply for partial grants (full exemption from tuition and registration fees and health insurance, but no monthly allowance). A full grant pays €1,400/month for up to 24 months.",
+      "fee_source": "https://www.greenanomaster.eu/fees-and-scholarships",
+      "fee_status": "not_found",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-16",
@@ -535,7 +631,13 @@
       "call_status": "2027 window not officially verified",
       "source_url": "https://sustagri-em.eu/",
       "in_window": false,
-      "alerts": []
+      "alerts": [],
+      "fee": "€9,000 / yr",
+      "fee_note": "2025–26 · all students",
+      "fee_detail": "Annual tuition was €9,000 for academic year 2025–26 (the same figure is listed for 2024–25), covering academic and administrative fees and health/accident insurance; no separate EU/non-EU amount is given, and self-funded students can apply only in the last application period. The consortium selects 8 students for full fee waivers (5 for EU/associated countries, 3 for other third countries), and offers a €1,500 one-off payment to some self-funded and fee-waiver students. No 2027 figure was found, so confirm.",
+      "fee_source": "https://www.unavarra.es/sites/sustagri-em/scholarships-fees/fees.html",
+      "fee_status": "published",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-17",
@@ -567,7 +669,13 @@
           "label": "IMATEC no stipend",
           "text": "Programme confirms Dec 1–Jan 31 applications but does not expect Erasmus Mundus full scholarships for 2027."
         }
-      ]
+      ],
+      "fee": "€14,800",
+      "fee_note": "2027 intake · no EM scholarship expected",
+      "fee_detail": "For the 2027 intake, self-payers pay the full tuition fee of €14,800 (the page doesn't say whether that is per year or for the whole programme) with no separate EU/non-EU rate. A tuition fee waiver covering the €14,800 is available only to applicants from Partner Countries, who still pay their own living and travel costs (estimated €30,000–35,000 for 2 years). The page says fully funded Erasmus Mundus scholarships are not expected to be available for the 2027 intake.",
+      "fee_source": "https://www.imatec-mundus.eu/scholarship/",
+      "fee_status": "published",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-18",
@@ -595,7 +703,13 @@
       "call_status": "2027 call not published; 2026 intake no EMJM",
       "source_url": "https://www.quanteem.eu/registration/",
       "in_window": false,
-      "alerts": []
+      "alerts": [],
+      "fee": "Not found",
+      "fee_note": "EM scholarships not available",
+      "fee_detail": "The page gives no tuition figure for the 2026–2028 edition (its applicant PDF couldn't be read). It says Erasmus Mundus scholarships are not available this year and mentions a limited number of scholarships with a net monthly allowance of €680, so confirm the tuition with the programme.",
+      "fee_source": "https://www.quanteem.eu/registration/",
+      "fee_status": "not_found",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-19",
@@ -627,7 +741,13 @@
           "label": "MIPDaL discrepancy",
           "text": "Online scholarship campaign lists June 30 2027 closing, but consortium admissions page specifies January 15, 2027 as scholarship cutoff. Use January 15."
         }
-      ]
+      ],
+      "fee": "€11,990 / yr",
+      "fee_note": "non-European · European €9,990",
+      "fee_detail": "Tuition for the 2027/2028 intake, per academic year: €11,990 for non-European students and €9,990 for European students (EU Member States and UK). A first non-refundable instalment of €700 is due after acceptance. Students spending the second semester at UK partners without a scholarship pay a top-up fee (QMUL £20,050; Exeter £12,000). Erasmus Mundus scholarship holders (about 12 per year) do not pay tuition to the consortium. Non-EU visa application fees are extra.",
+      "fee_source": "https://mipdal.eu/admission/",
+      "fee_status": "published",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-20",
@@ -655,7 +775,13 @@
       "call_status": "Possible Nov window — 2027 dates unverified",
       "source_url": "https://www.master-meta4-0.eu/application/",
       "in_window": true,
-      "alerts": []
+      "alerts": [],
+      "fee": "€18,000 total",
+      "fee_note": "partner countries · EU €9,000",
+      "fee_detail": "Tuition for the whole 2-year programme is €18,000 for partner countries (all countries outside the EU and associated countries) and €9,000 for EU and associated countries; no per-year figure or separate self-funded rate is given. Scholarship holders have tuition waived (€1,400/month for 24 months, 90 scholarships across 4 cohorts); a consortium scholarship gives a 50% tuition reduction. The page lists cohorts 2023–2027, so confirm the figure for 2027.",
+      "fee_source": "https://www.master-meta4-0.eu/fees-and-scholarships/",
+      "fee_status": "published",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-21",
@@ -683,7 +809,13 @@
       "call_status": "2027 call not yet published",
       "source_url": "https://master-emmah.eu/home",
       "in_window": false,
-      "alerts": []
+      "alerts": [],
+      "fee": "€7,770 / yr",
+      "fee_note": "non-associated countries · EU €4,243",
+      "fee_detail": "Self-funded tuition for Cohort 4 (2026–2028): €7,770 per year for students from third countries not associated with the Programme, €4,243 per year for EU Member States and associated third countries (the page's footnotes are garbled, so confirm the country groups). The page states that no Mundus scholarships will be awarded to students applying in the self-funded campaign.",
+      "fee_source": "https://www.master-emmah.eu/application-and-admission/admission-and-selection",
+      "fee_status": "published",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-22",
@@ -710,7 +842,13 @@
       "call_status": "2027 call unannounced; formerly EMJM (consortium grants)",
       "source_url": "https://bimaplus.org/scholarships/",
       "in_window": false,
-      "alerts": []
+      "alerts": [],
+      "fee": "Not found",
+      "fee_note": "no longer an EMJM programme",
+      "fee_detail": "The official site describes BIM A+ as a multicentre European Master that was formerly an Erasmus Mundus Joint Master, co-funded by Erasmus+ until 2023, and shows no fee table. A third-party listing shows €9,000 per year for the University of Minho's BIM master, but it isn't confirmed that this applies to BIM A+ students.",
+      "fee_source": "https://bimaplus.org/",
+      "fee_status": "not_found",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-23",
@@ -738,7 +876,13 @@
       "call_status": "Outside requested window — funded Feb 2027",
       "source_url": "https://clide.umk.pl/pages/participation/",
       "in_window": false,
-      "alerts": []
+      "alerts": [],
+      "fee": "€2,000 / semester",
+      "fee_note": "EU & consortium countries",
+      "fee_detail": "A search snippet of the official participation page gives a self-funded tuition fee of €2,000 per semester for students from EU and CLIDE consortium countries; the rate for other nationalities (including Pakistan) was cut off, and the site could not be opened to check. Check the participation page for the non-EU fee.",
+      "fee_source": "https://clide.umk.pl/pages/participation/",
+      "fee_status": "unverified",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-24",
@@ -766,7 +910,13 @@
       "call_status": "2027 unannounced; 2026 intake self-funded only",
       "source_url": "https://agrifoodmaster.eu/how-to-apply.html",
       "in_window": false,
-      "alerts": []
+      "alerts": [],
+      "fee": "Varies by university",
+      "fee_note": "€3,000 to €9,000 / yr",
+      "fee_detail": "Self-payer fees reported for different host universities conflict and come from search results, not from the programme site (which was behind a bot check): about €6,000 per year at CZU Prague, about €3,000 at MATE (Hungary), and an older BOKU notice of €4,500 (programme country) / €9,000 (partner country). Ask the consortium which host path applies.",
+      "fee_source": "https://agrifoodmaster.eu/how-to-apply.html",
+      "fee_status": "unverified",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-25",
@@ -794,7 +944,13 @@
       "call_status": "No verified active 2027 call / portal",
       "source_url": "https://ec.europa.eu/programmes/erasmus-plus/projects/eplus-project-details/#project/619804-EPP-1-2020-1-BE-EPPKA1-JMD-MOB",
       "in_window": false,
-      "alerts": []
+      "alerts": [],
+      "fee": "€9,000 / yr",
+      "fee_note": "non-EU · EU €1,500",
+      "fee_detail": "Only aggregator listings (Mastersportal, KU Leuven track) show €9,000 per year for non-EU and €1,500 per year for EU students; No consortium fee schedule was found. One source lists the current Erasmus Mundus grant period as ending 30 September 2026, so confirm the programme is still recruiting for your intake.",
+      "fee_source": "https://www.mastersportal.com/studies/38308/erasmus-mundus-master-of-science-in-nanoscience-and-nanotechnology.html",
+      "fee_status": "unverified",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-26",
@@ -826,7 +982,13 @@
           "label": "FOOD4S discontinued",
           "text": "Official KU Leuven page says programme being phased out, no new student intakes."
         }
-      ]
+      ],
+      "fee": "No new intake",
+      "fee_note": "phased out from 2026/27",
+      "fee_detail": "The programme page says that from academic year 2026/2027 the programme is being phased out and no new intakes will be admitted, so there is no current fee to pay.",
+      "fee_source": "https://iiw.kuleuven.be/english/food4s/",
+      "fee_status": "published",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-27",
@@ -859,7 +1021,13 @@
           "label": "HYSET pending funding",
           "text": "Applications opened Oct 1, end Nov 15; consortium says funding beyond 2026 not yet secured."
         }
-      ]
+      ],
+      "fee": "Not found",
+      "fee_note": "see self-funded page",
+      "fee_detail": "The pages that could be read give no self-funded tuition figure; they point to a separate 'self-funded students' page. The EMJM scholarship covers programme tuition and health insurance plus €1,400/month for up to 24 months, the same for EU and non-EU students. Applications for the 2027–29 intake open on 1 October 2026.",
+      "fee_source": "https://hysetmaster.polito.it/scholarship-information",
+      "fee_status": "not_found",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-28",
@@ -886,7 +1054,13 @@
       "call_status": "NO 2027–29 EMJM scholarships; intake undecided",
       "source_url": "https://apply.un-ihe.org/application-process/master-of-science-erasmus",
       "in_window": false,
-      "alerts": []
+      "alerts": [],
+      "fee": "Not decided",
+      "fee_note": "no EM scholarship for 2027/29",
+      "fee_detail": "The application page says no Erasmus Mundus scholarships will be available for 2027/2029 and that it has not yet been decided whether the programme will be offered to self-payers for 2027/2029; no fee amount is given. Check imete.eu for updates.",
+      "fee_source": "https://apply.un-ihe.org/application-process/master-of-science-erasmus",
+      "fee_status": "not_found",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-29",
@@ -914,7 +1088,13 @@
       "call_status": "2027 unannounced; last call NO Erasmus Mundus stipend",
       "source_url": "https://www.eu-conexus.eu/en/marine-biotechnology/",
       "in_window": false,
-      "alerts": []
+      "alerts": [],
+      "fee": "€9,000 / yr",
+      "fee_note": "non-EU · EU/EEA-area €5,000",
+      "fee_detail": "Self-funded tuition: €9,000 per year for non-EU citizens and €5,000 per year for citizens and permanent residents of the EU, North Macedonia, Serbia, Iceland, Liechtenstein, Norway and Turkey. Up to 15 places receive a 100% tuition fee waiver (tuition, laboratory credit fees, teaching platform, health insurance), which excludes living costs, travel and visas. The page links admission documents for 2026/2027 but doesn't tie the fees to a year.",
+      "fee_source": "https://www.eu-conexus.eu/en/marine-biotechnology/",
+      "fee_status": "published",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-30",
@@ -941,7 +1121,13 @@
       "call_status": "No trustworthy official 2027 admissions page found",
       "source_url": "https://miret.mu.ac.ke/",
       "in_window": false,
-      "alerts": []
+      "alerts": [],
+      "fee": "Not found",
+      "fee_note": "site unreachable",
+      "fee_detail": "The programme website (miret.mu.ac.ke) could not be reached from here (its domain didn't resolve), and no other source for the fee was found.",
+      "fee_source": "https://miret.mu.ac.ke/",
+      "fee_status": "not_found",
+      "fee_checked": "2026-10-28"
     },
     {
       "id": "adjacent-31",
@@ -968,7 +1154,13 @@
       "call_status": "2027 call unannounced (updates due Nov)",
       "source_url": "https://master-quarmen.eu/apply/scholarship",
       "in_window": false,
-      "alerts": []
+      "alerts": [],
+      "fee": "€6,000 / yr",
+      "fee_note": "self-financed",
+      "fee_detail": "Self-financed students pay €6,000 per year, in full at the start of each academic year; no separate EU/non-EU rate or total is stated. The fee covers university enrolment, international insurance, language courses, summer and winter schools, facilities and social activities. Erasmus Mundus scholarship beneficiaries don't pay it, but the scholarships page says the full Erasmus Mundus scholarship is not available for the 2026–2028 class (other partial and Paris-Saclay awards exist).",
+      "fee_source": "https://master-quarmen.eu/apply/tuition-fees",
+      "fee_status": "published",
+      "fee_checked": "2026-10-28"
     }
   ]
 }

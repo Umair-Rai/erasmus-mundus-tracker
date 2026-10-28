@@ -26,6 +26,12 @@ export interface Programme {
   source_url: string;
   in_window: boolean;
   alerts: Note[];
+  fee: string;
+  fee_note: string;
+  fee_detail: string;
+  fee_source: string;
+  fee_status: "published" | "unverified" | "not_found" | "";
+  fee_checked: string;
 }
 
 export interface CatalogueEntry {
