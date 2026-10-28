@@ -50,6 +50,9 @@ CS-Adjacent), keyed `direct:ACRONYM` / `adjacent:ACRONYM`. Each entry has the he
 | `unverified` | Only from a search summary or third-party listing; confirm on the programme site |
 | `not_found` | No fee published, or the site couldn't be read |
 
+`fee_year_eur` is the approximate yearly tuition for a non-EU self-funded student (`0` = no tuition,
+`null` = unpublished or unclear); the Tuition fee filter bands are built from it.
+
 The backend merges this file into the tracker rows, and edits show up without a restart. Fees change
 every intake, so re-check a programme's official page before relying on a figure.
 

@@ -72,6 +72,15 @@ export function Toolbar({ children }: { children: ReactNode }) {
   return <div className="toolbar">{children}</div>;
 }
 
+export function FilterToggle({ open, active, controls, onClick }: { open: boolean; active: number; controls: string; onClick: () => void }) {
+  return (
+    <button className="filter-toggle" aria-expanded={open} aria-controls={controls} onClick={onClick}>
+      Filters
+      {active > 0 && <span className="filter-badge" aria-label={`${active} active`}>{active}</span>}
+    </button>
+  );
+}
+
 export function SearchBox({ value, onChange }: { value: string; onChange: (v: string) => void }) {
   return (
     <div className="search-wrap"><Icon name="search" /><input

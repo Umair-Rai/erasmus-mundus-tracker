@@ -27,6 +27,7 @@ export interface Programme {
   in_window: boolean;
   alerts: Note[];
   fee: string;
+  fee_year_eur: number | null;
   fee_note: string;
   fee_detail: string;
   fee_source: string;

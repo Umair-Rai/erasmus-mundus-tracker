@@ -93,6 +93,16 @@ h1 { margin: 0; font-size: 28px; font-weight: 600; line-height: 1.2; letter-spac
 .select { display: flex; align-items: center; gap: 6px; height: 36px; padding: 0 4px 0 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--muted); font-size: 13px; }
 .select:focus-within { border-color: var(--primary); }
 .select select { max-width: 150px; height: 100%; padding: 0 6px 0 0; border: 0; outline: none; background: transparent; font-size: 13px; color: var(--text); text-overflow: ellipsis; }
+.filter-toggle { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); font-size: 13px; font-weight: 500; }
+.filter-toggle:hover { background: var(--subtle); }
+.filter-toggle[aria-expanded='true'] { border-color: var(--primary); }
+.filter-badge { min-width: 18px; padding: 0 6px; border-radius: 999px; background: var(--primary); color: var(--on-primary); font-size: 11px; line-height: 18px; text-align: center; }
+.filters-panel { margin-top: 10px; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+.filters-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 8px; }
+.filters-grid .select { width: 100%; background: var(--bg); }
+.filters-grid .select select { flex: 1; min-width: 0; max-width: none; }
+.filters-panel .toggle { margin-top: 10px; padding: 0 4px; }
+select option { background: var(--surface); color: var(--text); }
 .toggle { display: flex; align-items: center; gap: 6px; padding: 0 4px; color: var(--muted); font-size: 13px; }
 .toggle input { accent-color: var(--primary); }
 

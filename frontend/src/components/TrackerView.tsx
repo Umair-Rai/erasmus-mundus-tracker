@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react";
 import { deadlineSortKey, formatDay, startOfToday, timingOf, type Timing, type TimingKind } from "../dates";
+import { countriesOf, feeBand, ieltsBand, moiVerdict, pakistanVerdict, type FeeBand, type Verdict } from "../facets";
 import type { Note, Programme } from "../types";
 import { Dialog } from "./Dialog";
 import { TrackerDetail } from "./TrackerDetail";
-import { EmptyState, Notes, PriorityChip, SearchBox, Select, Toolbar } from "./ui";
+import { EmptyState, FilterToggle, Notes, PriorityChip, SearchBox, Select, Toolbar } from "./ui";
 
 type TimingFilter = "all" | TimingKind;
 type SortKey = "sheet" | "start" | "deadline" | "priority";
@@ -12,7 +13,15 @@ interface Row {
   programme: Programme;
   timing: Timing;
   haystack: string;
+  pakistan: Exclude<Verdict, "unknown">;
+  moi: Verdict;
+  ielts: number | null;
+  feeBand: FeeBand;
+  countries: string[];
 }
+
+const ALL = "all";
+const NO_ROUTE = "none";
 
 const TIMING_TABS: [TimingFilter, string][] = [
   ["all", "All"],
@@ -22,19 +31,51 @@ const TIMING_TABS: [TimingFilter, string][] = [
   ["closed", "Closed"],
 ];
 
-const PRIORITY_OPTIONS: [string, string][] = [
-  ["all", "All"],
-  ["1", "Priority 1"],
-  ["2", "Priority 2"],
-  ["3", "Priority 3"],
-];
-
 const SORT_OPTIONS: [SortKey, string][] = [
   ["sheet", "Spreadsheet order"],
   ["deadline", "Deadline (soonest)"],
   ["start", "Start date (soonest)"],
   ["priority", "Priority"],
 ];
+
+const MATCHERS = {
+  priority: (v: string, r: Row) => String(r.programme.priority) === v,
+  pakistan: (v: string, r: Row) => r.pakistan === v,
+  moi: (v: string, r: Row) => r.moi === v,
+  ielts: (v: string, r: Row) => (v === "unknown" ? r.ielts === null : r.ielts !== null && (v === "known" || r.ielts <= Number(v))),
+  fee: (v: string, r: Row) => r.feeBand === v,
+  country: (v: string, r: Row) => (v === NO_ROUTE ? r.countries.length === 0 : r.countries.includes(v)),
+};
+type FilterKey = keyof typeof MATCHERS;
+const FILTER_KEYS = Object.keys(MATCHERS) as FilterKey[];
+
+const FILTER_FIELDS: { key: Exclude<FilterKey, "country">; label: string; options: [string, string][] }[] = [
+  { key: "pakistan", label: "Pakistan eligible", options: [["yes", "Yes"], ["verify", "Verify"], ["no", "No"]] },
+  { key: "moi", label: "MOI accepted", options: [["yes", "Accepted"], ["verify", "Case by case"], ["no", "Not accepted"], ["unknown", "Not verified"]] },
+  { key: "ielts", label: "IELTS needed", options: [["6.0", "Up to 6.0"], ["6.5", "Up to 6.5"], ["known", "Any published band"], ["unknown", "Not published"]] },
+  { key: "fee", label: "Tuition fee", options: [["free", "No tuition"], ["low", "Up to €5,000 / yr"], ["mid", "€5,001–9,000 / yr"], ["high", "Over €9,000 / yr"], ["unknown", "Not published"]] },
+  { key: "priority", label: "Priority", options: [["1", "Priority 1"], ["2", "Priority 2"], ["3", "Priority 3"]] },
+];
+
+interface Filters extends Record<FilterKey, string> {
+  query: string;
+  timing: TimingFilter;
+  windowOnly: boolean;
+  sort: SortKey;
+}
+
+const DEFAULTS: Filters = {
+  query: "",
+  timing: ALL,
+  windowOnly: false,
+  sort: "sheet",
+  priority: ALL,
+  pakistan: ALL,
+  moi: ALL,
+  ielts: ALL,
+  fee: ALL,
+  country: ALL,
+};
 
 const REQUIREMENT_COLUMNS: { key: "ielts" | "moi" | "gre" | "stipend" | "pakistan_eligible"; label: string; className: string }[] = [
   { key: "ielts", label: "IELTS", className: "col-ielts" },
@@ -53,12 +94,11 @@ function deadlineCell({ programme: p, timing }: Row) {
 
 export function TrackerView({ items, notes }: { items: Programme[]; notes: Note[] }) {
   const today = useMemo(startOfToday, []);
-  const [query, setQuery] = useState("");
-  const [priority, setPriority] = useState("all");
-  const [timing, setTiming] = useState<TimingFilter>("all");
-  const [windowOnly, setWindowOnly] = useState(false);
-  const [sort, setSort] = useState<SortKey>("sheet");
+  const [filters, setFilters] = useState(DEFAULTS);
+  const [panelOpen, setPanelOpen] = useState(() => window.matchMedia("(min-width: 721px)").matches);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  const set = <K extends keyof Filters>(key: K, value: Filters[K]) => setFilters((f) => ({ ...f, [key]: value }));
 
   const rows = useMemo<Row[]>(
     () =>
@@ -81,6 +121,11 @@ export function TrackerView({ items, notes }: { items: Programme[]; notes: Note[
         ]
           .join(" ")
           .toLowerCase(),
+        pakistan: pakistanVerdict(programme.pakistan_eligible),
+        moi: moiVerdict(programme.moi),
+        ielts: ieltsBand(programme.ielts),
+        feeBand: feeBand(programme),
+        countries: countriesOf(programme.countries),
       })),
     [items, today],
   );
@@ -91,61 +136,80 @@ export function TrackerView({ items, notes }: { items: Programme[]; notes: Note[
     return result;
   }, [rows]);
 
+  const fields = useMemo(() => {
+    const withCounts = (key: FilterKey, options: [string, string][]): [string, string][] => [
+      [ALL, "Any"],
+      ...options.map(([value, label]): [string, string] => [value, `${label} (${rows.filter((r) => MATCHERS[key](value, r)).length})`]),
+    ];
+    const countryNames = [...new Set(rows.flatMap((r) => r.countries))].sort();
+    const countryOptions: [string, string][] = countryNames.map((c) => [c, c]);
+    if (rows.some((r) => r.countries.length === 0)) countryOptions.push([NO_ROUTE, "Route not published"]);
+    return [
+      ...FILTER_FIELDS.map((f) => ({ key: f.key as FilterKey, label: f.label, options: withCounts(f.key, f.options) })),
+      { key: "country" as FilterKey, label: "Study in", options: withCounts("country", countryOptions) },
+    ];
+  }, [rows]);
+
   const visible = useMemo(() => {
-    const q = query.trim().toLowerCase();
+    const q = filters.query.trim().toLowerCase();
     const result = rows.filter(
       (r) =>
         (!q || r.haystack.includes(q)) &&
-        (priority === "all" || String(r.programme.priority) === priority) &&
-        (timing === "all" || r.timing.kind === timing) &&
-        (!windowOnly || r.programme.in_window),
+        (filters.timing === ALL || r.timing.kind === filters.timing) &&
+        (!filters.windowOnly || r.programme.in_window) &&
+        FILTER_KEYS.every((k) => filters[k] === ALL || MATCHERS[k](filters[k], r)),
     );
-    if (sort === "deadline") {
+    if (filters.sort === "deadline") {
       result.sort((a, b) =>
         deadlineSortKey(a.programme, a.timing).localeCompare(deadlineSortKey(b.programme, b.timing)),
       );
-    } else if (sort === "priority") {
+    } else if (filters.sort === "priority") {
       result.sort((a, b) => (a.programme.priority ?? 9) - (b.programme.priority ?? 9));
-    } else if (sort === "start") {
+    } else if (filters.sort === "start") {
       result.sort((a, b) => (a.programme.opens_on ?? "9999-12-31").localeCompare(b.programme.opens_on ?? "9999-12-31"));
     }
     return result;
-  }, [rows, query, priority, timing, windowOnly, sort]);
+  }, [rows, filters]);
 
   const hasWindow = items.some((p) => p.in_window);
   const selected = rows.find((r) => r.programme.id === selectedId);
-
-  const reset = () => {
-    setQuery("");
-    setPriority("all");
-    setTiming("all");
-    setWindowOnly(false);
-    setSort("sheet");
-  };
+  const activeFilters = FILTER_KEYS.filter((k) => filters[k] !== ALL).length + (filters.windowOnly ? 1 : 0);
+  const dirty = (Object.keys(DEFAULTS) as (keyof Filters)[]).some((k) => filters[k] !== DEFAULTS[k]);
+  const reset = () => setFilters(DEFAULTS);
 
   return (
     <>
       <div className="segmented" role="group" aria-label="Filter by status">
         {TIMING_TABS.map(([key, label]) => (
-          <button key={key} aria-pressed={timing === key} onClick={() => setTiming(key)}>
+          <button key={key} aria-pressed={filters.timing === key} onClick={() => set("timing", key)}>
             {label} <span>{counts[key]}</span>
           </button>
         ))}
       </div>
 
       <Toolbar>
-        <SearchBox value={query} onChange={setQuery} />
-        <Select label="Priority" value={priority} onChange={setPriority} options={PRIORITY_OPTIONS} />
-        <Select label="Sort by" value={sort} onChange={(v) => setSort(v as SortKey)} options={SORT_OPTIONS} />
-        {hasWindow && (
-          <label className="toggle">
-            <input type="checkbox" checked={windowOnly} onChange={(e) => setWindowOnly(e.target.checked)} />
-            Oct 28 – Dec 31 window
-          </label>
-        )}
+        <SearchBox value={filters.query} onChange={(v) => set("query", v)} />
+        <Select label="Sort by" value={filters.sort} onChange={(v) => set("sort", v as SortKey)} options={SORT_OPTIONS} />
+        <FilterToggle open={panelOpen} active={activeFilters} controls="filters-panel" onClick={() => setPanelOpen((o) => !o)} />
       </Toolbar>
 
-      <div className="results-bar"><p className="count" role="status">{visible.length} of {rows.length} programmes</p><button className="text-button" onClick={reset} disabled={!query && priority === "all" && timing === "all" && !windowOnly && sort === "sheet"}>Reset filters</button></div>
+      {panelOpen && (
+        <div className="filters-panel" id="filters-panel">
+          <div className="filters-grid">
+            {fields.map((f) => (
+              <Select key={f.key} label={f.label} value={filters[f.key]} onChange={(v) => set(f.key, v)} options={f.options} />
+            ))}
+          </div>
+          {hasWindow && (
+            <label className="toggle">
+              <input type="checkbox" checked={filters.windowOnly} onChange={(e) => set("windowOnly", e.target.checked)} />
+              Oct 28 – Dec 31 window
+            </label>
+          )}
+        </div>
+      )}
+
+      <div className="results-bar"><p className="count" role="status">{visible.length} of {rows.length} programmes</p><button className="text-button" onClick={reset} disabled={!dirty}>Reset filters</button></div>
 
       {visible.length === 0 ? (
         <EmptyState onReset={reset} />

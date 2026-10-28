@@ -33,6 +33,7 @@ class Programme(BaseModel):
     in_window: bool = False
     alerts: list[Note] = []
     fee: str = ""
+    fee_year_eur: float | None = None
     fee_note: str = ""
     fee_detail: str = ""
     fee_source: str = ""
