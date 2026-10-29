@@ -19,8 +19,21 @@ const SUBMIT: Record<AuthMode, string> = {
 
 const MIN_PASSWORD = 8;
 const returnUrl = () => window.location.origin + window.location.pathname;
-const friendly = (message: string) =>
-  /fetch|network/i.test(message) ? "Couldn't reach the server. Check your connection and try again." : message;
+const KNOWN_ERRORS: Record<string, string> = {
+  email_address_invalid: "That email address was rejected as invalid. Please use a real address that you can receive mail at.",
+  over_email_send_rate_limit: "Too many emails have been sent recently, so no more can go out right now. Please try again in about an hour.",
+  over_request_rate_limit: "Too many attempts. Please wait a minute and try again.",
+  email_not_confirmed: "Please confirm your email first: open the link we sent to your inbox, then sign in.",
+  user_already_exists: "That email already has an account. Try signing in.",
+  weak_password: "That password is too weak. Try a longer one with a mix of letters and numbers.",
+};
+
+function describe(failure: unknown): string {
+  const code = (failure as { code?: string } | null)?.code;
+  if (code && KNOWN_ERRORS[code]) return KNOWN_ERRORS[code];
+  const message = failure instanceof Error ? failure.message : "Something went wrong.";
+  return /fetch|network/i.test(message) ? "Couldn't reach the server. Check your connection and try again." : message;
+}
 
 export function AuthDialog({ mode: initialMode, reason, onClose }: { mode: AuthMode; reason?: string; onClose: () => void }) {
   const [mode, setMode] = useState(initialMode);
@@ -71,7 +84,7 @@ export function AuthDialog({ mode: initialMode, reason, onClose }: { mode: AuthM
         onClose();
       }
     } catch (failure) {
-      setError(friendly(failure instanceof Error ? failure.message : "Something went wrong."));
+      setError(describe(failure));
     } finally {
       setBusy(false);
     }
