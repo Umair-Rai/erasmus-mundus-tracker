@@ -80,6 +80,17 @@ One-time setup:
    - Live site: GitHub repo > Settings > Secrets and variables > Actions > **Variables**, add
      `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`, then re-run the *Deploy to GitHub Pages* workflow.
 
+Steps 3 and 4 (and custom SMTP) can be applied in one go with `supabase/configure_auth.py`. Create a personal
+access token (Dashboard > Account > Access Tokens), then add it to the git-ignored `.env` at the repo root next
+to the SMTP login (`EMAIL_USER`, `EMAIL_PASSWORD`, `SMTP_HOST`, `SMTP_PORT`):
+
+```
+SUPABASE_ACCESS_TOKEN=sbp_...
+```
+
+Run `python supabase/configure_auth.py --dry-run` to preview, then without `--dry-run` to apply. The `.env` file
+is ignored by git; never commit it.
+
 Never put the `service_role` key anywhere in this repo or the site.
 
 ## Live site (GitHub Pages)
